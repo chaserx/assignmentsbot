@@ -1,0 +1,193 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/calendar/v3/calendars/fayette.kyschools.us_jtcs0efrcacc9c8pk9e303278c@group.calendar.google.com/events?key=<APIKEY>&timeMax=2018-12-01T00:00:00-05:00&timeMin=2018-11-30T00:00:00-05:00
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Sat, 01 Dec 2018 03:11:48 GMT
+      Date:
+      - Sat, 01 Dec 2018 03:11:48 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="44,43,39,35"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+         "kind": "calendar#events",
+         "etag": "\"p33kcbrcou7uds0g\"",
+         "summary": "Voyager Team Homework Calendar",
+         "updated": "2018-11-30T19:47:51.777Z",
+         "timeZone": "America/New_York",
+         "accessRole": "reader",
+         "defaultReminders": [],
+         "nextSyncToken": "COjF7Zjx_N4CEAAYAQ==",
+         "items": [
+          {
+           "kind": "calendar#event",
+           "etag": "\"3087189235798000\"",
+           "id": "2i0k5deefs3ochjqkd62uc4h0p",
+           "status": "confirmed",
+           "htmlLink": "https://www.google.com/calendar/event?eid=MmkwazVkZWVmczNvY2hqcWtkNjJ1YzRoMHAgZmF5ZXR0ZS5reXNjaG9vbHMudXNfanRjczBlZnJjYWNjOWM4cGs5ZTMwMzI3OGNAZw",
+           "created": "2018-11-30T16:16:57.000Z",
+           "updated": "2018-11-30T16:16:57.899Z",
+           "summary": "Social Studies - Agenda:  Complete Final Exam and test corrections  HW - N/A   We start EUROPE next week!!!!",
+           "creator": {
+            "email": "tammy.conley@fayette.kyschools.us",
+            "displayName": "Tammy Conley"
+           },
+           "organizer": {
+            "email": "fayette.kyschools.us_jtcs0efrcacc9c8pk9e303278c@group.calendar.google.com",
+            "displayName": "Voyager Team Homework Calendar",
+            "self": true
+           },
+           "start": {
+            "date": "2018-11-30"
+           },
+           "end": {
+            "date": "2018-12-01"
+           },
+           "transparency": "transparent",
+           "iCalUID": "2i0k5deefs3ochjqkd62uc4h0p@google.com",
+           "sequence": 0,
+           "extendedProperties": {
+            "private": {
+             "everyoneDeclinedDismissed": "-1"
+            }
+           }
+          },
+          {
+           "kind": "calendar#event",
+           "etag": "\"3087214463528000\"",
+           "id": "0r8l8a82dl56qjtt5lkci3j08u",
+           "status": "confirmed",
+           "htmlLink": "https://www.google.com/calendar/event?eid=MHI4bDhhODJkbDU2cWp0dDVsa2NpM2owOHUgZmF5ZXR0ZS5reXNjaG9vbHMudXNfanRjczBlZnJjYWNjOWM4cGs5ZTMwMzI3OGNAZw",
+           "created": "2018-11-30T19:47:11.000Z",
+           "updated": "2018-11-30T19:47:11.764Z",
+           "summary": "LANGUAGE ARTS - HENRY  AGENDA:  Bellwork Quiz, finish partner activity with Performance Assessment Workbook  HW: IRP #2 is due December 12.",
+           "creator": {
+            "email": "tammy.conley@fayette.kyschools.us",
+            "displayName": "Tammy Conley"
+           },
+           "organizer": {
+            "email": "fayette.kyschools.us_jtcs0efrcacc9c8pk9e303278c@group.calendar.google.com",
+            "displayName": "Voyager Team Homework Calendar",
+            "self": true
+           },
+           "start": {
+            "date": "2018-11-30"
+           },
+           "end": {
+            "date": "2018-12-01"
+           },
+           "transparency": "transparent",
+           "iCalUID": "0r8l8a82dl56qjtt5lkci3j08u@google.com",
+           "sequence": 0,
+           "extendedProperties": {
+            "private": {
+             "everyoneDeclinedDismissed": "-1"
+            }
+           }
+          },
+          {
+           "kind": "calendar#event",
+           "etag": "\"3087214506876000\"",
+           "id": "4atuqpjga1hakjkfuo5ha9c6c4",
+           "status": "confirmed",
+           "htmlLink": "https://www.google.com/calendar/event?eid=NGF0dXFwamdhMWhha2prZnVvNWhhOWM2YzQgZmF5ZXR0ZS5reXNjaG9vbHMudXNfanRjczBlZnJjYWNjOWM4cGs5ZTMwMzI3OGNAZw",
+           "created": "2018-11-30T16:46:16.000Z",
+           "updated": "2018-11-30T19:47:33.438Z",
+           "summary": "Math - General:  Write and solve addition and subtraction equations.  HW:  Pg. 193&194: 14-27 all  Advanced:  Write and solve equations with integer.  HW:  Pg. 206 all",
+           "creator": {
+            "email": "tammy.conley@fayette.kyschools.us",
+            "displayName": "Tammy Conley"
+           },
+           "organizer": {
+            "email": "fayette.kyschools.us_jtcs0efrcacc9c8pk9e303278c@group.calendar.google.com",
+            "displayName": "Voyager Team Homework Calendar",
+            "self": true
+           },
+           "start": {
+            "date": "2018-11-30"
+           },
+           "end": {
+            "date": "2018-12-01"
+           },
+           "transparency": "transparent",
+           "iCalUID": "4atuqpjga1hakjkfuo5ha9c6c4@google.com",
+           "sequence": 0,
+           "extendedProperties": {
+            "private": {
+             "everyoneDeclinedDismissed": "-1"
+            }
+           }
+          },
+          {
+           "kind": "calendar#event",
+           "etag": "\"3087214543554000\"",
+           "id": "4s9ifu2tdmba8b1qg06k3ao077",
+           "status": "confirmed",
+           "htmlLink": "https://www.google.com/calendar/event?eid=NHM5aWZ1MnRkbWJhOGIxcWcwNmszYW8wNzcgZmF5ZXR0ZS5reXNjaG9vbHMudXNfanRjczBlZnJjYWNjOWM4cGs5ZTMwMzI3OGNAZw",
+           "created": "2018-11-30T19:47:51.000Z",
+           "updated": "2018-11-30T19:47:51.777Z",
+           "summary": "SCIENCE - ANACLETO  AGENDA:  Weather notes  HW: None",
+           "creator": {
+            "email": "tammy.conley@fayette.kyschools.us",
+            "displayName": "Tammy Conley"
+           },
+           "organizer": {
+            "email": "fayette.kyschools.us_jtcs0efrcacc9c8pk9e303278c@group.calendar.google.com",
+            "displayName": "Voyager Team Homework Calendar",
+            "self": true
+           },
+           "start": {
+            "date": "2018-11-30"
+           },
+           "end": {
+            "date": "2018-12-01"
+           },
+           "transparency": "transparent",
+           "iCalUID": "4s9ifu2tdmba8b1qg06k3ao077@google.com",
+           "sequence": 0,
+           "extendedProperties": {
+            "private": {
+             "everyoneDeclinedDismissed": "-1"
+            }
+           }
+          }
+         ]
+        }
+    http_version: 
+  recorded_at: Sat, 01 Dec 2018 03:11:48 GMT
+recorded_with: VCR 4.0.0
