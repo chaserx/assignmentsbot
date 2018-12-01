@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'send email daily from assignments posted google calendar'
+
+Resources:
+  AssignmentsbotOutgoingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: messenger.outgoing
+      Runtime: ruby2.5
+
+Outputs:
+  AssignmentsbotOutgoingFunction:
+    Description: Assignmentsbot Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - AssignmentsbotOutgoingFunction
+      - Arn
