@@ -19,7 +19,7 @@ class Template
           * <%= assignment %>
         <% end %>
       <% else %>
-        No assignments were found on the <%= summary %> for <%= @date %>.
+        No assignments were found on the <%= @summary %> for <%= @date %>.
       <% end %>
 
       Thanks,
