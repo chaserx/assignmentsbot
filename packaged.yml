@@ -24,7 +24,7 @@ Parameters:
 Resources:
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/4b176ddae623cb8d063432cfefc0b66f
+      CodeUri: s3://assignmentsbot-cloudformation/8e9e5c76c2087c2fd1ad622901a77ba5
       Environment:
         Variables:
           API_KEY:

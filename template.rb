@@ -10,21 +10,21 @@ class Template
 
   def skeleton
     %q{
-      <%= greeting %>:
+    <%= greeting %>:
 
-      <% if @assignments.any? %>
-        Here are the homework assignments from the <%= @summary %> for <%= @date %>:
+    <% if @assignments.any? %>
+      Here are the homework assignments from the <%= @summary %> for <%= @date %>:
 
-        <% @assignments.each do |assignment| %>
-          * <%= assignment %>
-        <% end %>
-      <% else %>
-        No assignments were found on the <%= @summary %> for <%= @date %>.
+      <% @assignments.each do |assignment| %>
+        * <%= assignment %>
       <% end %>
+    <% else %>
+      No assignments were found on the <%= @summary %> for <%= @date %>.
+    <% end %>
 
-      Thanks,
+    Thanks,
 
-      Assignments Bot
+    Assignments Bot
     }.gsub(/^  /, '')
   end
 
