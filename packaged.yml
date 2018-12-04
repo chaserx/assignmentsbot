@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: send email daily from assignments posted google calendar
+Outputs:
+  AssignmentsbotOutgoingMessageFunction:
+    Description: Assignmentsbot Outgoing Message Function ARN
+    Value:
+      Fn::GetAtt:
+      - AssignmentsbotOutgoingMessageFunction
+      - Arn
+  AssignmentsbotOutgoingMessageFunctionIamRole:
+    Description: Implicit IAM Role created for Assignmentsbot Outgoing Message Function
+      ARN
+    Value:
+      Fn::GetAtt:
+      - AssignmentsbotOutgoingMessageFunctionRole
+      - Arn
+Parameters:
+  EnvAPIKey:
+    Default: assignmentsbotAPIKey
+    Type: AWS::SSM::Parameter::Value<String>
+  EnvGCal:
+    Default: assignmentsbotCalendar
+    Type: AWS::SSM::Parameter::Value<String>
+Resources:
+  AssignmentsbotOutgoingMessageFunction:
+    Properties:
+      CodeUri: s3://assignmentsbot-cloudformation/68498829c874a70e761a8542633d1319
+      Environment:
+        Variables:
+          API_KEY:
+            Ref: EnvAPIKey
+          CALENDAR:
+            Ref: EnvGCal
+      Handler: app.lambda_handler
+      Runtime: ruby2.5
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
