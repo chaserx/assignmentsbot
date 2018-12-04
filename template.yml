@@ -9,6 +9,12 @@ Parameters:
   EnvAPIKey:
     Type : 'AWS::SSM::Parameter::Value<String>'
     Default: assignmentsbotAPIKey
+  EnvMailgunAPIKey:
+    Type : 'AWS::SSM::Parameter::Value<String>'
+    Default: mailgunAPIKey
+  EnvMailgunDomain:
+    Type : 'AWS::SSM::Parameter::Value<String>'
+    Default: mailgunDomain
 
 Resources:
   AssignmentsbotOutgoingMessageFunction:
@@ -21,6 +27,8 @@ Resources:
         Variables:
           CALENDAR: !Ref EnvGCal
           API_KEY: !Ref EnvAPIKey
+          MAILGUN_API_KEY: !Ref EnvMailgunAPIKey
+          MAILGUN_DOMAIN: !Ref EnvMailgunDomain
 
 Outputs:
   AssignmentsbotOutgoingMessageFunction:

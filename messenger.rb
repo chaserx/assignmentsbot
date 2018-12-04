@@ -1,6 +1,8 @@
+require 'date'
 require 'json'
 require_relative 'calendar'
 require_relative 'template'
+require_relative 'mailer'
 
 class Messenger
   def outgoing
@@ -9,7 +11,11 @@ class Messenger
       raise 'failed to get a successful response from google calendar'
     end
 
-    studies_message(response)
+    mailer = Mailer.new(to: "chase.southard@gmail.com",
+                        from: "no-reply@assignmentsbot.com",
+                        subject: "Assignments for #{Date.today.to_s}",
+                        body: studies_message(response))
+    mailer.deliver
   end
 
   private
