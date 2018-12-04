@@ -2,20 +2,31 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: 'send email daily from assignments posted google calendar'
 
+Parameters:
+  EnvGCal:
+    Type : 'AWS::SSM::Parameter::Value<String>'
+    Default: assignmentsbotCalendar
+  EnvAPIKey:
+    Type : 'AWS::SSM::Parameter::Value<String>'
+    Default: assignmentsbotAPIKey
+
 Resources:
-  AssignmentsbotOutgoingFunction:
+  AssignmentsbotOutgoingMessageFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: messenger.outgoing
+      Handler: app.lambda_handler
       Runtime: ruby2.5
-      Role:
-        Fn::ImportValue:
-          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      CodeUri: ./
+      Environment:
+        Variables:
+          CALENDAR: !Ref EnvGCal
+          API_KEY: !Ref EnvAPIKey
 
 Outputs:
-  AssignmentsbotOutgoingFunction:
-    Description: Assignmentsbot Lambda Function ARN
-    Value:
-      Fn::GetAtt:
-      - AssignmentsbotOutgoingFunction
-      - Arn
+  AssignmentsbotOutgoingMessageFunction:
+    Description: "Assignmentsbot Outgoing Message Function ARN"
+    Value: !GetAtt AssignmentsbotOutgoingMessageFunction.Arn
+
+  AssignmentsbotOutgoingMessageFunctionIamRole:
+    Description: "Implicit IAM Role created for Assignmentsbot Outgoing Message Function ARN"
+    Value: !GetAtt AssignmentsbotOutgoingMessageFunctionRole.Arn
