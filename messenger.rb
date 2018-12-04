@@ -12,6 +12,7 @@ class Messenger
     end
 
     message = studies_message(response)
+    puts message
     mailer = Mailer.new(to: "chase.southard@gmail.com",
                         from: "no-reply@assignmentsbot.com",
                         subject: "Assignments for #{Date.today.to_s}",
