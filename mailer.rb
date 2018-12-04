@@ -2,11 +2,11 @@ require 'dotenv/load'
 require 'httparty'
 
 class Mailer
-  def initialize(to:, from:, subject:, body:)
+  def initialize(to:, from:, subject:, text:)
     @to = to
     @from = from
     @subject = subject
-    @body = body
+    @text = text
   end
 
   def deliver
@@ -18,7 +18,7 @@ class Mailer
       from: @from,
       to: @to,
       subject: @subject,
-      text: @body
+      text: @text
     }
 
     if response.code != 200

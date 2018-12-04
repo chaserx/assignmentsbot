@@ -21,16 +21,26 @@ Parameters:
   EnvGCal:
     Default: assignmentsbotCalendar
     Type: AWS::SSM::Parameter::Value<String>
+  EnvMailgunAPIKey:
+    Default: mailgunAPIKey
+    Type: AWS::SSM::Parameter::Value<String>
+  EnvMailgunDomain:
+    Default: mailgunDomain
+    Type: AWS::SSM::Parameter::Value<String>
 Resources:
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/d75c5119aefa0227f3c2a3e46f47e95c
+      CodeUri: s3://assignmentsbot-cloudformation/78a7a9e836e44c4f1ac8112281a18db7
       Environment:
         Variables:
           API_KEY:
             Ref: EnvAPIKey
           CALENDAR:
             Ref: EnvGCal
+          MAILGUN_API_KEY:
+            Ref: EnvMailgunAPIKey
+          MAILGUN_DOMAIN:
+            Ref: EnvMailgunDomain
       Handler: app.lambda_handler
       Runtime: ruby2.5
     Type: AWS::Serverless::Function

@@ -8,13 +8,14 @@ class Messenger
   def outgoing
     response = Calendar.get
     if response.code != 200
-      raise 'failed to get a successful response from google calendar'
+      raise "Failed to get a successful response from Google Calendar. #{response.inspect}"
     end
 
+    message = studies_message(response)
     mailer = Mailer.new(to: "chase.southard@gmail.com",
                         from: "no-reply@assignmentsbot.com",
                         subject: "Assignments for #{Date.today.to_s}",
-                        body: studies_message(response))
+                        text: message)
     mailer.deliver
   end
 
