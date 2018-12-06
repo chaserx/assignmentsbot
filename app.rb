@@ -1,5 +1,5 @@
 require 'json'
-require 'messenger'
+require_relative 'messenger'
 
 def lambda_handler(event:, context:)
   Messenger.new.outgoing

@@ -33,11 +33,7 @@ class Template
   end
 
   def output
-    build.run(binding)
-  end
-
-  def to_s
-    output
+    build.result(binding)
   end
 
   def greeting

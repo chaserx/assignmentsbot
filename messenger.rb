@@ -25,7 +25,7 @@ class Messenger
   def studies_message(response)
     calendar_data = JSON.parse(response.body)
 
-    Template.new(summary: calendar_data.dig('summary'), assignments: assignments(calendar_data)).to_s
+    Template.new(summary: calendar_data.dig('summary'), assignments: assignments(calendar_data)).output
   end
 
   def assignments(hsh)
