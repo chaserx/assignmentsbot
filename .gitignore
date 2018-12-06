@@ -53,3 +53,4 @@ build-iPhoneSimulator/
 .env
 
 template-export.yml
+.byebug_history
