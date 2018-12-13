@@ -1,5 +1,6 @@
 require 'date'
 require 'json'
+require 'active_support/all'
 require_relative 'calendar'
 require_relative 'template'
 require_relative 'mailer'
@@ -30,6 +31,6 @@ class Messenger
 
   def assignments(hsh)
     items = hsh.dig("items") || [{}]
-    items.map{|item| item.dig("summary")}
+    items.select{|item| Time.parse(item.dig("start", "date")).today? }.map{|item| item.dig("summary")}
   end
 end

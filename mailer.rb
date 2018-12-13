@@ -14,8 +14,6 @@ class Mailer
     domain = ENV.fetch('MAILGUN_DOMAIN')
     url = mailgun_url(api_key: api_key, domain: domain)
 
-    puts "you are here. #{@text}"
-
     response = HTTParty.post url, body: {
                                           from: @from,
                                           to: @to,
