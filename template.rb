@@ -25,6 +25,10 @@ class Template
     Thanks,
 
     Assignments Bot
+
+    P.S. The bot tries its best, so please do not subtitute this for your own diligence.
+
+    P.P.S If you would like to unsubscribe from this email list, please visit: http://assignmentsbot.com/unsubscribe
     }.gsub(/^  /, '')
   end
 
