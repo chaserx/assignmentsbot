@@ -3,9 +3,9 @@ require 'httparty'
 require 'active_support/all'
 
 class Calendar
-  def self.get
+  def self.get(calendar_id=nil)
     base_url = "https://www.googleapis.com/calendar/v3/calendars"
-    calendar = ENV.fetch('CALENDAR')
+    calendar = calendar_id || ENV.fetch('CALENDAR')
     resource = "events"
     query = {
       "timeMin" => Date.current.midnight.rfc3339,
