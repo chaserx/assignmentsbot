@@ -6,14 +6,8 @@ require_relative 'template'
 require_relative 'mailer'
 
 class Messenger
-  def outgoing
-    response = Calendar.get
-    if response.code != 200
-      raise "Failed to get a successful response from Google Calendar. #{response.inspect}"
-    end
-
-    message = studies_message(response)
-    puts message
+  def outgoing(calendar_data:, recipient_list:)
+    message = studies_message(calendar_data)
     mailer = Mailer.new(to: "chase.southard@gmail.com",
                         from: "no-reply@assignmentsbot.com",
                         subject: "Assignments for #{Date.today.to_s}",
@@ -23,9 +17,7 @@ class Messenger
 
   private
 
-  def studies_message(response)
-    calendar_data = JSON.parse(response.body)
-
+  def studies_message(calendar_data)
     Template.new(summary: calendar_data.dig('summary'), assignments: assignments(calendar_data)).output
   end
 
