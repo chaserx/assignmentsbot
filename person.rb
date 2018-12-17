@@ -12,10 +12,10 @@ class Person
     })
   end
 
-  set_table_name ENV.fetch('DYNAMO_TABLE_NAME')
+  set_table_name ENV.fetch('DDB_PERSON_TABLE')
   string_attr :email_address, hash_key: true
   string_attr :confirmation_token, default_value: SecureRandom.hex(3)
-  string_set_attr :teams # ['voyagers6', 'explorers6', 'navigators6']
+  string_set_attr :teams # ['voyagers_6', 'explorers_6', 'navigators_6']
   boolean_attr :accepted_tos, default_value: false
   boolean_attr :confirmed, default_value: false
   datetime_attr :created_at, default_value: Time.now.iso8601
