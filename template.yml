@@ -29,6 +29,51 @@ Resources:
           API_KEY: !Ref EnvAPIKey
           MAILGUN_API_KEY: !Ref EnvMailgunAPIKey
           MAILGUN_DOMAIN: !Ref EnvMailgunDomain
+          DDB_PERSON_TABLE: !Ref PeopleDynamoDBTable
+          DDB_TEAM_TABLE: !Ref TeamsDynamoDBTable
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref PeopleDynamoDBTable
+      - DynamoDBCrudPolicy:
+          TableName: !Ref TeamsDynamoDBTable
+  PeopleDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "abPeopleTable-prod"
+      BillingMode: "PAY_PER_REQUEST"
+      AttributeDefinitions:
+        -
+          AttributeName: "email_address"
+          AttributeType: "S"
+        -
+          AttributeName: "confirmation_token"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "email_address"
+          KeyType: "HASH"
+      GlobalSecondaryIndexes:
+        -
+          IndexName: "confirmation_token_index"
+          KeySchema:
+            -
+              AttributeName: "confirmation_token"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+  TeamsDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "abTeamsTable-prod"
+      BillingMode: "PAY_PER_REQUEST"
+      AttributeDefinitions:
+        -
+          AttributeName: "name"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "name"
+          KeyType: "HASH"
 
 Outputs:
   AssignmentsbotOutgoingMessageFunction:
