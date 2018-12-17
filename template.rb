@@ -26,7 +26,7 @@ class Template
 
     Assignments Bot
 
-    P.S. The bot tries its best, so please do not subtitute this for your own diligence.
+    P.S. Software bugs happen. Please do not subtitute this digest email for your own diligence.
 
     P.P.S If you would like to unsubscribe from this email list, please visit: http://assignmentsbot.com/unsubscribe
     }.gsub(/^  /, '')
