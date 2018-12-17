@@ -30,18 +30,60 @@ Parameters:
 Resources:
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/ef0f94420a694ed64ed6a6c73ccb2534
+      CodeUri: s3://assignmentsbot-cloudformation/9f215304e97c38c3efb37693484c83e6
       Environment:
         Variables:
           API_KEY:
             Ref: EnvAPIKey
           CALENDAR:
             Ref: EnvGCal
+          DDB_PERSON_TABLE:
+            Ref: PeopleDynamoDBTable
+          DDB_TEAM_TABLE:
+            Ref: TeamsDynamoDBTable
           MAILGUN_API_KEY:
             Ref: EnvMailgunAPIKey
           MAILGUN_DOMAIN:
             Ref: EnvMailgunDomain
       Handler: app.lambda_handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: PeopleDynamoDBTable
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: TeamsDynamoDBTable
       Runtime: ruby2.5
     Type: AWS::Serverless::Function
+  PeopleDynamoDBTable:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: email_address
+        AttributeType: S
+      - AttributeName: confirmation_token
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+      - IndexName: confirmation_token_index
+        KeySchema:
+        - AttributeName: confirmation_token
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+      KeySchema:
+      - AttributeName: email_address
+        KeyType: HASH
+      TableName: abPeopleTable-prod
+    Type: AWS::DynamoDB::Table
+  TeamsDynamoDBTable:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: name
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: name
+        KeyType: HASH
+      TableName: abTeamsTable-prod
+    Type: AWS::DynamoDB::Table
 Transform: AWS::Serverless-2016-10-31
