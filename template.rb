@@ -26,9 +26,9 @@ class Template
 
     Assignments Bot
 
-    P.S. Software bugs happen. Please do not subtitute this digest email for your own diligence.
+    P.S. Software bugs happen. Please do not substitute this digest email for your own diligence.
 
-    P.P.S If you would like to unsubscribe from this email list, please visit: http://assignmentsbot.com/unsubscribe
+    P.P.S If you would like to remove yourself from this email list, please visit: http://assignmentsbot.com/unsubscribe
     }.gsub(/^  /, '')
   end
 
