@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: send email daily from assignments posted google calendar
+Description: send email daily from assignments posted on a public google calendar
 Outputs:
   AssignmentsbotOutgoingMessageFunction:
     Description: Assignmentsbot Outgoing Message Function ARN
@@ -30,7 +30,7 @@ Parameters:
 Resources:
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/9f215304e97c38c3efb37693484c83e6
+      CodeUri: s3://assignmentsbot-cloudformation/c147f532a124853d48902bbd9057313c
       Environment:
         Variables:
           API_KEY:
@@ -45,7 +45,14 @@ Resources:
             Ref: EnvMailgunAPIKey
           MAILGUN_DOMAIN:
             Ref: EnvMailgunDomain
+      Events:
+        Weekday4pmCron:
+          Name: Weekday4pmESTCron
+          Properties:
+            Schedule: cron(0 21 ? * MON-FRI *)
+          Type: Schedule
       Handler: app.lambda_handler
+      MemorySize: 512
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
@@ -54,6 +61,7 @@ Resources:
           TableName:
             Ref: TeamsDynamoDBTable
       Runtime: ruby2.5
+      Timeout: 60
     Type: AWS::Serverless::Function
   PeopleDynamoDBTable:
     Properties:

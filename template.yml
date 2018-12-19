@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: 'send email daily from assignments posted google calendar'
+Description: 'send email daily from assignments posted on a public google calendar'
 
 Parameters:
   EnvGCal:
@@ -31,6 +31,14 @@ Resources:
           MAILGUN_DOMAIN: !Ref EnvMailgunDomain
           DDB_PERSON_TABLE: !Ref PeopleDynamoDBTable
           DDB_TEAM_TABLE: !Ref TeamsDynamoDBTable
+      MemorySize: 512
+      Timeout: 60
+      Events:
+        Weekday4pmCron:
+          Name: Weekday4pmESTCron
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 21 ? * MON-FRI *)
       Policies:
       - DynamoDBCrudPolicy:
           TableName: !Ref PeopleDynamoDBTable
