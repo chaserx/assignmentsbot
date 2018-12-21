@@ -15,6 +15,11 @@ Outputs:
       - AssignmentsbotOutgoingMessageFunctionRole
       - Arn
 Parameters:
+  BucketName:
+    AllowedPattern: ^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
+    Default: assignmentsbot.com
+    Description: The name for the bucket hosting your website
+    Type: String
   EnvAPIKey:
     Default: assignmentsbotAPIKey
     Type: AWS::SSM::Parameter::Value<String>
@@ -30,7 +35,7 @@ Parameters:
 Resources:
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/c147f532a124853d48902bbd9057313c
+      CodeUri: s3://assignmentsbot-cloudformation/a7b4e2427bceff420591250dee7bc7ec
       Environment:
         Variables:
           API_KEY:
@@ -94,4 +99,28 @@ Resources:
         KeyType: HASH
       TableName: abTeamsTable-prod
     Type: AWS::DynamoDB::Table
+  WebsiteBucket:
+    DeletionPolicy: Retain
+    Properties:
+      BucketName:
+        Ref: BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      WebsiteConfiguration:
+        ErrorDocument: index.html
+        IndexDocument: index.html
+    Type: AWS::S3::Bucket
+  WebsiteBucketPolicy:
+    Properties:
+      Bucket:
+        Ref: WebsiteBucket
+      PolicyDocument:
+        Statement:
+        - Action: s3:GetObject
+          Effect: Allow
+          Principal: '*'
+          Resource:
+            Fn::Sub: arn:aws:s3:::${WebsiteBucket}/*
+        Version: 2012-10-17
+    Type: AWS::S3::BucketPolicy
 Transform: AWS::Serverless-2016-10-31
