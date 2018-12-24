@@ -14,6 +14,17 @@ Outputs:
       Fn::GetAtt:
       - AssignmentsbotOutgoingMessageFunctionRole
       - Arn
+  PersonApi:
+    Description: API Gateway endpoint URL for Prod stage for API Gateway Multi-Origin
+      CORS function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+  PersonCreate:
+    Description: API Gateway Multi-Origin CORS Lambda Function (Root) ARN
+    Value:
+      Fn::GetAtt:
+      - AssignmentsbotCreatePersonFunction
+      - Arn
 Parameters:
   BucketName:
     AllowedPattern: ^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
@@ -33,9 +44,36 @@ Parameters:
     Default: mailgunDomain
     Type: AWS::SSM::Parameter::Value<String>
 Resources:
+  AssignmentsbotCreatePersonFunction:
+    Properties:
+      CodeUri: s3://assignmentsbot-cloudformation/69bbe7acd1c4cbf9af683162838ee225
+      Environment:
+        Variables:
+          DDB_PERSON_TABLE:
+            Ref: PeopleDynamoDBTable
+      Events:
+        Options:
+          Properties:
+            Method: options
+            Path: /people
+          Type: Api
+        Post:
+          Properties:
+            Method: post
+            Path: /people
+          Type: Api
+      Handler: api/person_api.create
+      MemorySize: 512
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: PeopleDynamoDBTable
+      Runtime: ruby2.5
+      Timeout: 60
+    Type: AWS::Serverless::Function
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/a7b4e2427bceff420591250dee7bc7ec
+      CodeUri: s3://assignmentsbot-cloudformation/69bbe7acd1c4cbf9af683162838ee225
       Environment:
         Variables:
           API_KEY:

@@ -23,6 +23,7 @@ Parameters:
 
 Resources:
   WebsiteBucket:
+    Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketName
       WebsiteConfiguration:
@@ -31,8 +32,8 @@ Resources:
       VersioningConfiguration:
         Status: Enabled
     DeletionPolicy: Retain
-    Type: "AWS::S3::Bucket"
   WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref WebsiteBucket
       PolicyDocument:
@@ -43,7 +44,6 @@ Resources:
             Principal: "*"
             Action: s3:GetObject
             Resource: !Sub "arn:aws:s3:::${WebsiteBucket}/*"
-    Type: "AWS::S3::BucketPolicy"
   AssignmentsbotOutgoingMessageFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -71,6 +71,31 @@ Resources:
           TableName: !Ref PeopleDynamoDBTable
       - DynamoDBCrudPolicy:
           TableName: !Ref TeamsDynamoDBTable
+  AssignmentsbotCreatePersonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: api/person_api.create
+      Runtime: ruby2.5
+      CodeUri: ./
+      Environment:
+        Variables:
+          DDB_PERSON_TABLE: !Ref PeopleDynamoDBTable
+      MemorySize: 512
+      Timeout: 60
+      Events:
+        Post:
+          Type: 'Api'
+          Properties:
+            Path: '/people'
+            Method: 'post'
+        Options:
+          Type: 'Api'
+          Properties:
+            Path: '/people'
+            Method: 'options'
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref PeopleDynamoDBTable
   PeopleDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -118,3 +143,11 @@ Outputs:
   AssignmentsbotOutgoingMessageFunctionIamRole:
     Description: "Implicit IAM Role created for Assignmentsbot Outgoing Message Function ARN"
     Value: !GetAtt AssignmentsbotOutgoingMessageFunctionRole.Arn
+
+  PersonApi:
+    Description: "API Gateway endpoint URL for Prod stage for API Gateway Multi-Origin CORS function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
+  PersonCreate:
+    Description: "API Gateway Multi-Origin CORS Lambda Function (Root) ARN"
+    Value: !GetAtt AssignmentsbotCreatePersonFunction.Arn
