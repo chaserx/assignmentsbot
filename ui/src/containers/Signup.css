@@ -1,0 +1,12 @@
+.form {
+  text-align: left;
+}
+
+.form > h2,h3,h4,h5 {
+  text-align: center;
+}
+
+.serious {
+  padding-top: 20px;
+  text-align: center;
+}
