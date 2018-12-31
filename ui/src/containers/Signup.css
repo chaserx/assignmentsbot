@@ -10,3 +10,7 @@
   padding-top: 20px;
   text-align: center;
 }
+
+.validation-errors {
+  color: #dc3545;
+}

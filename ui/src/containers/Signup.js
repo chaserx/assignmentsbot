@@ -64,7 +64,9 @@ export default class Signup extends Component {
                 email: Yup.string()
                   .email("Please enter a valid email address")
                   .required("An email address is required"),
-                teams: Yup.array().required("Please choose a team")
+                teams: Yup.array().required(
+                  "Please choose a team(s) from the selection above"
+                )
               })}
             >
               {({
@@ -77,7 +79,7 @@ export default class Signup extends Component {
                 isSubmitting
               }) => (
                 <Form className="form" onSubmit={handleSubmit}>
-                  <h2>Sign Up</h2>
+                  <h2>JCMS Assignments Bot</h2>
                   <h4>Calendar agenda mailed weekdays at 4pm</h4>
                   <FormGroup>
                     {/* <Label for="signupEmail">Email</Label> */}
@@ -86,12 +88,16 @@ export default class Signup extends Component {
                       name="email"
                       id="signupEmail"
                       placeholder="Your email address"
-                      className="form-control"
+                      className={
+                        "form-control " + (errors.email ? "is-invalid" : "")
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    {errors.email && touched.email && errors.email}
+                    <div className="validation-errors">
+                      {errors.email && touched.email && errors.email}
+                    </div>
                   </FormGroup>
 
                   <p>Select your team(s):</p>
@@ -100,26 +106,39 @@ export default class Signup extends Component {
                       name="teams"
                       value="explorers_6"
                       labelname="JCMS Grade 6: Explorers"
-                      className="form-check-input"
+                      className={
+                        "form-check-input " +
+                        (errors.teams && touched.teams ? "is-invalid" : "")
+                      }
                     />
 
                     <TeamCheckbox
                       name="teams"
                       value="navigators_6"
                       labelname="JCMS Grade 6: Navigators"
-                      className="form-check-input"
+                      className={
+                        "form-check-input " +
+                        (errors.teams && touched.teams ? "is-invalid" : "")
+                      }
                     />
 
                     <TeamCheckbox
                       name="teams"
                       value="voyagers_6"
                       labelname="JCMS Grade 6: Voyagers"
-                      className="form-check-input"
+                      className={
+                        "form-check-input " +
+                        (errors.teams && touched.teams ? "is-invalid" : "")
+                      }
                     />
                   </FormGroup>
-                  <div>{errors.teams && touched.teams && errors.teams}</div>
+
+                  <div className="validation-errors">
+                    {errors.teams && touched.teams && errors.teams}
+                  </div>
 
                   <div>
+                    {/* NOTE(chaserx): This is wrong and I know it. I'll circle back around. */}
                     <p>&nbsp;</p>
                   </div>
 
@@ -142,7 +161,7 @@ export default class Signup extends Component {
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <div className="serious">
               <small>
-                Our privacy, anti-spam, and GDPR policies. We take these things
+                Our privacy and anti-spam policies. We take this stuff
                 seriously.
               </small>
             </div>
