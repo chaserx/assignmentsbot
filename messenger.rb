@@ -27,6 +27,21 @@ class Messenger
 
   def assignments(hsh)
     items = hsh.dig("items") || [{}]
-    items.select{|item| Time.parse(item.dig("start", "date")).today? }.map{|item| item.dig("summary")}
+    items.select{|item| Time.parse(start_date_or_datetime(item)).today? }.map{|item| item.dig("summary")}
+  end
+
+  # NOTE(chaserx): adding this method as there appears to be two ways of including an event
+  def start_date_or_datetime(event)
+    case event.dig("start")&.keys
+    when ["date"]
+      event.dig("start", "date")
+    when ["dateTime"]
+      event.dig("start", "dateTime")
+    else
+      # NOTE(chaserx): I'm not sure this is a sensible default.
+      #    It certainly fails the .today? check
+      #    and it's a valid string for Time.parse instead of nil or empty string
+      "January 1, 1970"
+    end
   end
 end

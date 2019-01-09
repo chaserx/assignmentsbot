@@ -14,7 +14,23 @@ Outputs:
       Fn::GetAtt:
       - AssignmentsbotOutgoingMessageFunctionRole
       - Arn
+  PersonApi:
+    Description: API Gateway endpoint URL for Prod stage for API Gateway Multi-Origin
+      CORS function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+  PersonCreate:
+    Description: API Gateway Multi-Origin CORS Lambda Function (Root) ARN
+    Value:
+      Fn::GetAtt:
+      - AssignmentsbotCreatePersonFunction
+      - Arn
 Parameters:
+  BucketName:
+    AllowedPattern: ^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
+    Default: assignmentsbot.com
+    Description: The name for the bucket hosting your website
+    Type: String
   EnvAPIKey:
     Default: assignmentsbotAPIKey
     Type: AWS::SSM::Parameter::Value<String>
@@ -28,9 +44,36 @@ Parameters:
     Default: mailgunDomain
     Type: AWS::SSM::Parameter::Value<String>
 Resources:
+  AssignmentsbotCreatePersonFunction:
+    Properties:
+      CodeUri: s3://assignmentsbot-cloudformation/69bbe7acd1c4cbf9af683162838ee225
+      Environment:
+        Variables:
+          DDB_PERSON_TABLE:
+            Ref: PeopleDynamoDBTable
+      Events:
+        Options:
+          Properties:
+            Method: options
+            Path: /people
+          Type: Api
+        Post:
+          Properties:
+            Method: post
+            Path: /people
+          Type: Api
+      Handler: api/person_api.create
+      MemorySize: 512
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: PeopleDynamoDBTable
+      Runtime: ruby2.5
+      Timeout: 60
+    Type: AWS::Serverless::Function
   AssignmentsbotOutgoingMessageFunction:
     Properties:
-      CodeUri: s3://assignmentsbot-cloudformation/c147f532a124853d48902bbd9057313c
+      CodeUri: s3://assignmentsbot-cloudformation/69bbe7acd1c4cbf9af683162838ee225
       Environment:
         Variables:
           API_KEY:
@@ -94,4 +137,28 @@ Resources:
         KeyType: HASH
       TableName: abTeamsTable-prod
     Type: AWS::DynamoDB::Table
+  WebsiteBucket:
+    DeletionPolicy: Retain
+    Properties:
+      BucketName:
+        Ref: BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      WebsiteConfiguration:
+        ErrorDocument: index.html
+        IndexDocument: index.html
+    Type: AWS::S3::Bucket
+  WebsiteBucketPolicy:
+    Properties:
+      Bucket:
+        Ref: WebsiteBucket
+      PolicyDocument:
+        Statement:
+        - Action: s3:GetObject
+          Effect: Allow
+          Principal: '*'
+          Resource:
+            Fn::Sub: arn:aws:s3:::${WebsiteBucket}/*
+        Version: 2012-10-17
+    Type: AWS::S3::BucketPolicy
 Transform: AWS::Serverless-2016-10-31
