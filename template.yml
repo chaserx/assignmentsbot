@@ -16,13 +16,13 @@ Parameters:
     Type : 'AWS::SSM::Parameter::Value<String>'
     Default: mailgunDomain
 
-Api:
-  # enable CORS; to make more specific, change the origin wildcard
-  # to a particular domain name, e.g. "'www.example.com'"
-  Cors:
-    AllowMethods: "'*'"
-    AllowHeaders: "'*'"
-    AllowOrigin: "'*'"
+# Api:
+#   # enable CORS; to make more specific, change the origin wildcard
+#   # to a particular domain name, e.g. "'www.example.com'"
+#   Cors:
+#     AllowMethods: "'*'"
+#     AllowHeaders: "'*'"
+#     AllowOrigin: "'*'"
 
 Resources:
   AssignmentsbotOutgoingMessageFunction:
