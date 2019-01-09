@@ -15,35 +15,8 @@ Parameters:
   EnvMailgunDomain:
     Type : 'AWS::SSM::Parameter::Value<String>'
     Default: mailgunDomain
-  BucketName:
-    Type: String
-    Description: The name for the bucket hosting your website
-    AllowedPattern: ^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
-    Default: assignmentsbot.com
 
 Resources:
-  WebsiteBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref BucketName
-      WebsiteConfiguration:
-        IndexDocument: index.html
-        ErrorDocument: index.html
-      VersioningConfiguration:
-        Status: Enabled
-    DeletionPolicy: Retain
-  WebsiteBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref WebsiteBucket
-      PolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          -
-            Effect: Allow
-            Principal: "*"
-            Action: s3:GetObject
-            Resource: !Sub "arn:aws:s3:::${WebsiteBucket}/*"
   AssignmentsbotOutgoingMessageFunction:
     Type: AWS::Serverless::Function
     Properties:
