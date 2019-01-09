@@ -55,10 +55,22 @@ export default class Signup extends Component {
             <Formik
               initialValues={{ email: "", teams: [] }}
               onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
+                // setTimeout(() => {
+                //   alert(JSON.stringify(values, null, 2));
+                //   setSubmitting(false);
+                // }, 400);
+                console.log(JSON.stringify(values, null, 2));
+                fetch("http://localhost:3000/people", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(values, null, 2)
+                })
+                  .then(setSubmitting(false))
+                  .then(response => response.json())
+                  .then(json => console.log(json))
+                  .catch(e => console.error(e));
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
