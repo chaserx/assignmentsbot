@@ -21,6 +21,14 @@ Parameters:
     AllowedPattern: ^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$
     Default: assignmentsbot.com
 
+Api:
+  # enable CORS; to make more specific, change the origin wildcard
+  # to a particular domain name, e.g. "'www.example.com'"
+  Cors:
+    AllowMethods: "'*'"
+    AllowHeaders: "'*'"
+    AllowOrigin: "'*'"
+
 Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
@@ -88,14 +96,23 @@ Resources:
           Properties:
             Path: '/people'
             Method: 'post'
-        Options:
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref PeopleDynamoDBTable
+  LambdaLocalCorsStub:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: api/cors_options.handler
+      Runtime: ruby2.5
+      FunctionName: LocalCorsOptions
+      CodeUri: ./
+      Timeout: 30
+      Events:
+        peopleOptions: # This block must be repeated for each endpoint that needs CORS support in SAM Local
           Type: 'Api'
           Properties:
             Path: '/people'
             Method: 'options'
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref PeopleDynamoDBTable
   PeopleDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:

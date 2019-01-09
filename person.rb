@@ -8,8 +8,13 @@ class Person
 
   if ENV.fetch('LOCAL_ONLY')
     Aws.config.update({
-      profile: 'chaserx'
+      profile: 'chaserx',
+      region: 'local'
     })
+
+    # If you use a different port than 8000, set a custom endpoint too.
+    local_client = Aws::DynamoDB::Client.new(region: "local", endpoint: 'http://localhost:8000')
+    self.configure_client(client: local_client)
   end
 
   set_table_name ENV.fetch('DDB_PERSON_TABLE')
