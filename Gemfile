@@ -5,7 +5,7 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'activesupport', '~> 5.2.1.1'
-gem 'dotenv', '~> 2.5.0'
+gem 'dotenv', '~> 2.7.2'
 gem 'httparty', '~> 0.16.3'
 gem 'aws-record', '~> 1.0'
 gem 'mailgun-ruby', '~> 1.1.11'
