@@ -12,7 +12,7 @@ gem 'mailgun-ruby', '~> 1.1.11'
 
 group :development do
   gem 'awesome_print'
-  gem 'rubocop', '~> 0.60.0'
+  gem 'rubocop', '~> 0.74.0'
   gem 'vcr', '~> 4.0.0'
   gem "byebug", "~> 10.0"
 end
