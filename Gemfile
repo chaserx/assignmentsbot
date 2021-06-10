@@ -8,7 +8,7 @@ gem 'activesupport', '~> 5.2.1.1'
 gem 'dotenv', '~> 2.5.0'
 gem 'httparty', '~> 0.16.3'
 gem 'aws-record', '~> 1.0'
-gem 'mailgun-ruby', '~> 1.1.11'
+gem 'mailgun-ruby', '~> 1.2.5'
 
 group :development do
   gem 'awesome_print'
